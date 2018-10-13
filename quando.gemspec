@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Sergey Konotopov']
   spec.email         = ['werk@mail.ru']
 
-  spec.summary       = %q{Highly configurable text date parser.}
-  spec.description   = %q{Define your own patterns and parse those dates you want, how you want.}
+  spec.summary       = %q{Configurable date parser}
+  spec.description   = %q{Parse dates in any language and format by setting your own recognition patterns}
   spec.homepage      = 'https://github.com/kinkou/quando'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
