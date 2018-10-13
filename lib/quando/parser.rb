@@ -54,12 +54,12 @@ module Quando
 
       month = @date_parts[:month]
 
-      if month.match?(config.month_num)
+      if config.month_num.match(month)
         month.to_i
       else
         month_index = Quando::Config::MONTHS.find_index do |month_name|
           month_name_rx = config.send(month_name)
-          month.match?(month_name_rx)
+          month_name_rx.match(month)
         end
 
         month_index + 1 if month_index
