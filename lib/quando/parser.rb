@@ -28,7 +28,7 @@ module Quando
 
         @current_format = rx
         year, month, day = detect_year, detect_month, detect_day
-        next unless (year || month || day)
+        next unless (year && month && day)
 
         return Date.new(year, month, day)
       end

@@ -10,6 +10,7 @@ RSpec.describe Quando do
   let(:matz_bday_txt_rus) { '14 АПРЕЛЬ 1965' }
   let(:rails_release) { Date.new(2005, 12, 13) }
   let(:singe_digit_date) { Date.new(2004, 3, 2) }
+  let(:nonsense) { 'Båtar!' }
 
   specify 'Default date formats' do
     expect(Quando.parse '14.04.1965').to eq(matz_bday)
@@ -42,7 +43,7 @@ RSpec.describe Quando do
     expect(Quando.parse '32 3 04').to be_nil
     expect(Quando.parse '2 13 04').to be_nil
     expect(Quando.parse '14 -=*=- 1965').to be_nil
-    expect(Quando.parse 'Båtar!').to be_nil
+    expect(Quando.parse nonsense).to be_nil
   end
 
   let(:april_rus_rx) { /(?:АПРЕЛЬ)/i }
@@ -86,6 +87,11 @@ RSpec.describe Quando do
 
     result = Quando.parse('1965 14 Apr', matcher: /(?<year>\d{4}) (?<day>\d\d) (?<month>[A-Z]+)/i)
     expect(result).to eq(matz_bday)
+
+    [nonsense, 'Arpil'].each do |m|
+      result = Quando.parse(m, matcher: /(?<month>.+)/i)
+      expect(result).to be_nil
+    end
   end
 
 end
