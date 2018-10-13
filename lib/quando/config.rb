@@ -4,16 +4,16 @@
 module Quando
   class Config
 
-    AVAILABLE_OPTIONS = %i(
-      dlm year day
-      jan feb mar apr may jun jul aug sep oct nov dec
-      month_num month_txt
-      formats
-    )
+    AVAILABLE_OPTIONS = [
+      :dlm, :year, :day,
+      :jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec,
+      :month_num, :month_txt,
+      :formats
+    ]
 
     attr_accessor *AVAILABLE_OPTIONS
 
-    MONTHS = %i(jan feb mar apr may jun jul aug sep oct nov dec)
+    MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
 
     def initialize
       @dlm = /[ -.\/\\]/
@@ -40,16 +40,16 @@ module Quando
     def uniformats!
       @formats = [
         # 14.4.1965, 14/04/1965, 13-12-05
-        %r{\A\s* #{@day} #{@dlm} #{@month_num} #{@dlm} #{@year} \s*\z}xi,
+        /\A\s* #{@day} #{@dlm} #{@month_num} #{@dlm} #{@year} \s*\z/xi,
 
         # 14-APRIL-1965, 14-apr-65, 13/Dec/05, …
-        %r{\A\s* #{@day} #{@dlm} #{@month_txt} #{@dlm} #{@year} \s*\z}xi,
+        /\A\s* #{@day} #{@dlm} #{@month_txt} #{@dlm} #{@year} \s*\z/xi,
 
         # April 1965, apr.1965, DEC-05, …
-        %r{\A\s* #{@month_txt} #{@dlm} #{@year} \s*\z}xi,
+        /\A\s* #{@month_txt} #{@dlm} #{@year} \s*\z/xi,
 
         # April, DECEMBER, apr., …
-        %r{\A\s* #{@month_txt} \s*\z}xi,
+        /\A\s* #{@month_txt} \s*\z/xi,
       ]
     end
 
