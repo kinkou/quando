@@ -88,6 +88,9 @@ RSpec.describe Quando do
     result = Quando.parse('1965 14 Apr', matcher: /(?<year>\d{4}) (?<day>\d\d) (?<month>[A-Z]+)/i)
     expect(result).to eq(matz_bday)
 
+    result = Quando.parse('14 Apr 1965', matcher: [/^(?<day>\d+) (?<month>\d+) (?<year>\d+)$/i, /^(?<day>\d+) (?<month>\D+) (?<year>\d+)$/i])
+    expect(result).to eq(matz_bday)
+
     [nonsense, 'Arpil'].each do |m|
       result = Quando.parse(m, matcher: /(?<month>.+)/i)
       expect(result).to be_nil

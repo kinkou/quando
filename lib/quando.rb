@@ -17,7 +17,7 @@ module Quando
 
     if opts[:matcher]
       p.configure do |c|
-        c.formats = [opts[:matcher]]
+        c.formats = [opts[:matcher]].flatten
       end
     end
 
