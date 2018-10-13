@@ -19,8 +19,8 @@ Quando.configure do |c|
   c.unimonth!
 
   c.formats = [
-    /#{c.month_num} #{c.dlm} #{c.month_txt} #{c.dlm} #{c.year}/xi,
-    /#{c.year} #{c.dlm} #{c.month_txt} #{c.dlm} #{c.month_num}/xi,
+    /#{c.day} #{c.dlm} #{c.month_txt} #{c.dlm} #{c.year}/xi,
+    /#{c.year} #{c.dlm} #{c.month_txt} #{c.dlm} #{c.day}/xi,
   ]
 end
 
