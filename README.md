@@ -1,5 +1,7 @@
 # Quando
 
+[![Build Status](https://semaphoreci.com/api/v1/kinkou/quando/branches/master/shields_badge.svg)](https://semaphoreci.com/kinkou/quando)
+
 Quando is a configurable date parser. Show it what's what and parse any (Gregorian calendar) date. Quando can be configured on:
 
 #### Application-level:
