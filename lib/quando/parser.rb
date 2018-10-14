@@ -40,7 +40,11 @@ module Quando
 
     # @return [Integer, nil]
     def detect_year
-      return Time.now.year unless searched?(:year)
+      unless searched?(:year)
+        return Time.current.year if Time.respond_to?(:current)
+        return Time.now.getlocal.year
+      end
+
       return unless found?(:year)
 
       year = @date_parts[:year].to_i
