@@ -6,11 +6,7 @@ module Quando
 
     MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
 
-    AVAILABLE_OPTIONS = [
-      :dlm, :year, :day,
-      *MONTHS, :month_num, :month_txt,
-      :formats
-    ]
+    AVAILABLE_OPTIONS = [:dlm, :year, :day, *MONTHS, :month_num, :month_txt, :formats]
 
     private_constant :AVAILABLE_OPTIONS
 
