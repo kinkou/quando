@@ -13,25 +13,25 @@ module Quando
     attr_accessor *AVAILABLE_OPTIONS
 
     def initialize
-      @dlm = /[ -.\/\\]/
-      @year = /(?<year>(?:\d{2})|(?:\d{4}))/i
-      @month_num = /(?<month>(?:1[0-2])|(?:0?[1-9]))/
-      @day = /(?<day>(?:[3][0-1])|(?:[1-2][0-9])|(?:0?[1-9]))/
-
-      @jan = /(?:JANUARY)|(?:JAN\.?)/i
-      @feb = /(?:FEBRUARY)|(?:FEB\.?)/i
-      @mar = /(?:MARCH)|(?:MAR\.?)/i
-      @apr = /(?:APRIL)|(?:APR\.?)/i
-      @may = /(?:MAY\.?)/i
-      @jun = /(?:JUNE)|(?:JUN\.?)/i
-      @jul = /(?:JULY)|(?:JUL\.?)/i
-      @aug = /(?:AUGUST)|(?:AUG\.?)/i
-      @sep = /(?:SEPTEMBER)|(?:SEPT?\.?)/i
-      @oct = /(?:OCTOBER)|(?:OCT\.?)/i
-      @nov = /(?:NOVEMBER)|(?:NOV\.?)/i
-      @dec = /(?:DECEMBER)|(?:DEC\.?)/i
       @century = 2000
 
+      @dlm = /[ -.\/\\]+/
+      @year = /(?<year> \d{4} | \d{2})/x
+      @month_num = /(?<month> 1[0-2] | 0?[1-9])/x
+      @day = /(?<day> 3[0-1] | [12][0-9] | 0?[1-9])/x
+
+      @jan = /JANUARY | JAN/ix
+      @feb = /FEBRUARY | FEB/ix
+      @mar = /MARCH | MAR/ix
+      @apr = /APRIL | APR/ix
+      @may = /MAY/ix
+      @jun = /JUNE | JUN/ix
+      @jul = /JULY | JUL/ix
+      @aug = /AUGUST | AUG/ix
+      @sep = /SEPTEMBER | SEPT?/ix
+      @oct = /OCTOBER | OCT/ix
+      @nov = /NOVEMBER | NOV/ix
+      @dec = /DECEMBER | DEC/ix
 
       uniupdate!
     end
