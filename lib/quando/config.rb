@@ -5,10 +5,11 @@ module Quando
   class Config
 
     MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
+    AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num]
+    COMPOUND = [:month_txt, :formats]
+    OPTIONS = [*AUTOUPDATE, *COMPOUND, :century]
 
-    OPTIONS = [:dlm, :year, :year2, :day, *MONTHS, :month_num, :month_txt, :formats, :century]
-
-    private_constant :OPTIONS
+    private_constant :AUTOUPDATE, :COMPOUND, :OPTIONS
 
     attr_accessor *OPTIONS
 
