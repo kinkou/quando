@@ -11,11 +11,12 @@ module Quando
       :formats
     ]
 
+    private_constant :AVAILABLE_OPTIONS
+
     attr_accessor *AVAILABLE_OPTIONS
 
     MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
 
-    private_constant :AVAILABLE_OPTIONS
 
     def initialize
       @dlm = /[ -.\/\\]/
