@@ -90,6 +90,7 @@ module Quando
   def self.configure
     config unless @config
     yield(config) if block_given?
+    @config
   end
 
   # Reset Quando's class-level configuration to defaults
