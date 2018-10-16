@@ -73,7 +73,7 @@ RSpec.describe Quando do
     expect(Quando.parse '14 Apr. 1965').to eq(matz_bday)
     expect(Quando.parse '14 Apr 1965').to eq(matz_bday)
     expect(Quando.parse 'Dec 05').to eq(Date.new(2005, 12, 1))
-    expect(Quando.parse 'Dec').to eq(Date.new(Time.now.year, 12, 1))
+    expect(Quando.parse 'Dec').to eq(Date.new(Time.now.getlocal.year, 12, 1))
   end
 
   specify 'Default delimiters' do
