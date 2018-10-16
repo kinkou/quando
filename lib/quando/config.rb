@@ -15,6 +15,8 @@ module Quando
 
     MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
 
+    private_constant :MONTHS, :AVAILABLE_OPTIONS
+
     def initialize
       @dlm = /[ -.\/\\]/
       @year = /(?<year>(?:\d{2})|(?:\d{4}))/i
