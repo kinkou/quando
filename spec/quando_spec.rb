@@ -1,9 +1,6 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'pry'
-
 RSpec.describe Quando do
 
   let(:matz_bday) { Date.new(1965, 4, 14) }
