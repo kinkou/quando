@@ -6,7 +6,7 @@ module Quando
 
     MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
 
-    AVAILABLE_OPTIONS = [:dlm, :year, :day, *MONTHS, :month_num, :month_txt, :formats]
+    AVAILABLE_OPTIONS = [:dlm, :year, :day, *MONTHS, :month_num, :month_txt, :formats, :century]
 
     private_constant :AVAILABLE_OPTIONS
 
@@ -30,6 +30,8 @@ module Quando
       @oct = /(?:OCTOBER)|(?:OCT\.?)/i
       @nov = /(?:NOVEMBER)|(?:NOV\.?)/i
       @dec = /(?:DECEMBER)|(?:DEC\.?)/i
+      @century = 2000
+
 
       uniupdate!
     end
