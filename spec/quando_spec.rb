@@ -99,7 +99,7 @@ RSpec.describe Quando do
     expect(Quando.parse nonsense).to be_nil
   end
 
-  let(:april_rus_rx) { /(?:АПРЕЛЬ)/i }
+  let(:april_rus_rx) { /АПРЕЛЬ/i }
 
   specify 'Simple app-level configuration' do
     expect(Quando.parse matz_bday_txt_rus).to be_nil
