@@ -3,6 +3,34 @@
 
 RSpec.describe Quando do
 
+  describe 'Default day matcher regexp' do
+    let(:matcher) { Quando.config.day }
+    let(:matcher_w_boundaries) { /^#{matcher}$/ }
+    let(:valid_numbers) { (1..31).map(&:to_s) }
+    let(:valid_numbers_padded) { valid_numbers.map { |n| sprintf('%02i', n) } }
+
+    it 'Matches day numbers' do
+      valid_numbers.each do |unpadded|
+        expect(unpadded[matcher]).to eq(unpadded)
+      end
+    end
+
+    it 'Also matches 0-padded day numbers' do
+      valid_numbers_padded.each do |padded|
+        expect(padded[matcher]).to eq(padded)
+      end
+    end
+
+    it 'Requires boundary matchers to indentify a day properly' do
+      expect('32'[matcher]).to eq('3')
+      expect('32'[matcher_w_boundaries]).to be_nil
+    end
+
+    it 'Does not match anything else' do
+      %w(0 00 32 42).each { |n| expect(n[matcher_w_boundaries]).to be_nil }
+    end
+  end
+
   let(:matz_bday) { Date.new(1965, 4, 14) }
   let(:matz_bday_txt_rus) { '14 АПРЕЛЬ 1965' }
   let(:rails_release) { Date.new(2005, 12, 13) }
