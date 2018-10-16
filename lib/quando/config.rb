@@ -4,19 +4,17 @@
 module Quando
   class Config
 
+    MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
+
     AVAILABLE_OPTIONS = [
       :dlm, :year, :day,
-      :jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec,
-      :month_num, :month_txt,
+      *MONTHS, :month_num, :month_txt,
       :formats
     ]
 
     private_constant :AVAILABLE_OPTIONS
 
     attr_accessor *AVAILABLE_OPTIONS
-
-    MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
-
 
     def initialize
       @dlm = /[ -.\/\\]/
