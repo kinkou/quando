@@ -38,6 +38,11 @@ module Quando
       uniupdate!
     end
 
+    def unimonth!
+      all_months_txt_rxs = MONTHS.map { |m| instance_variable_get("@#{m}".to_sym) }.join('|')
+      @month_txt = Regexp.new("(?<month>#{all_months_txt_rxs})", true)
+    end
+
     def uniformats!
       @formats = [
         # Formats with a 4-digits year
@@ -63,11 +68,6 @@ module Quando
         # April, DECEMBER, sep., …
         /\A\s* #{@month_txt} \s*\z/xi,
       ]
-    end
-
-    def unimonth!
-      all_months_txt_rxs = MONTHS.map { |m| instance_variable_get("@#{m}".to_sym) }.join('|')
-      @month_txt = Regexp.new("(?<month>#{all_months_txt_rxs})", true)
     end
 
     def uniupdate!
