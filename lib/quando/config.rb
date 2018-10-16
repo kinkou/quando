@@ -38,11 +38,13 @@ module Quando
       uniupdate!
     end
 
+    # Sets @month_txt which is a compound of all month regexps and matches any month name
     def unimonth!
       all_months_txt_rxs = MONTHS.map { |m| instance_variable_get("@#{m}".to_sym) }.join('|')
       @month_txt = Regexp.new("(?<month>#{all_months_txt_rxs})", true)
     end
 
+    # Sets @formats which is an array of regexps used in succession to match and identify parts of the dates
     def uniformats!
       @formats = [
         # Formats with a 4-digits year
@@ -70,6 +72,7 @@ module Quando
       ]
     end
 
+    # A single method to update all compound matchers when a part matcher was changed
     def uniupdate!
       unimonth!
       uniformats!
@@ -77,16 +80,20 @@ module Quando
 
   end
 
+  # Quando's class-level configuration
   # @return [Quando::Config]
   def self.config
     @config ||= Config.new
   end
 
+  # @return [Quando::Config]
   def self.configure
     config unless @config
     yield(config) if block_given?
   end
 
+  # Reset Quando's class-level configuration to defaults
+  # @return [Quando::Config]
   def self.reset!
     @config = Config.new
   end

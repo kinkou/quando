@@ -8,6 +8,7 @@ require 'quando/parser'
 module Quando
 
   # @param opts [Hash]
+  # @option opts [Regexp, Array<Regexp>] :matcher (nil)
   # @param date [String]
   # @return [Date, nil]
   def self.parse(date, opts = {})
