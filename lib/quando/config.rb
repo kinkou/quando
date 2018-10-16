@@ -6,11 +6,11 @@ module Quando
 
     MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
 
-    AVAILABLE_OPTIONS = [:dlm, :year, :year2, :day, *MONTHS, :month_num, :month_txt, :formats, :century]
+    OPTIONS = [:dlm, :year, :year2, :day, *MONTHS, :month_num, :month_txt, :formats, :century]
 
-    private_constant :AVAILABLE_OPTIONS
+    private_constant :OPTIONS
 
-    attr_accessor *AVAILABLE_OPTIONS
+    attr_accessor *OPTIONS
 
     def initialize
       @century = 2000
