@@ -78,6 +78,21 @@ module Quando
       uniformats!
     end
 
+    # Batch-define setters for date part matchers (listed in AUTOUPDATE) that, when set,
+    # automatically update the compound matchers (listed in COMPOUND)
+    AUTOUPDATE.each do |var|
+      # def jan=(regexp)
+      #   return regexp if @jan == regexp
+      #   @jan = regexp
+      #   uniupdate!
+      # end
+      define_method("#{var}=".to_sym) do |regexp|
+        var_name = "@#{var}".to_sym
+        return regexp if instance_variable_get(var_name) == regexp
+        instance_variable_set(var_name, regexp)
+        uniupdate!
+      end
+    end
   end
 
   # Quando's class-level configuration
