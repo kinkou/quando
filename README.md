@@ -131,7 +131,7 @@ Quando.configure do |c|
   c.formats = [
     /^ #{c.day} #{c.dlm} #{c.month_txt} #{c.dlm} #{c.year} $/xi,
     # compiles into something like
-    # /^ (?<day>…) [ .]+ (?<month>jan|feb|…) [ .]+ (?<year>…) $/xi
+    # /^ (?<day> …) [ -.\/]+ (?<month> jan|feb|…) [ -.\/]+ (?<year> …) $/xi
     # and returns ~ #<MatchData "14 Apr 1965" day:"14" month:"Apr" year:"1965">
     # on successful match 
   ]
@@ -202,6 +202,8 @@ or just pass a format matcher as a parameter:
 m = /(?<year>#{Quando.config.year}) (?<day>\d\d) (?<month>[A-Z]+)/i
 Quando.parse('1965 14 Apr', matcher: m) #=> #<Date: 1965-04-14>
 ```
+
+In both cases it will not change the global configuration (but note that calling setter methods on ```Quando.config``` will).
 
 ### Requirements
 
