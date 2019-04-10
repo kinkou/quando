@@ -7,20 +7,18 @@ require 'quando/parser'
 
 module Quando
 
+  # @param date [String]
   # @param opts [Hash]
   # @option opts [Regexp, Array<Regexp>] :matcher (nil)
-  # @param date [String]
+  # @option opts [Integer] :century (nil)
   # @return [Date, nil]
   def self.parse(date, opts = {})
     return if (date = date.to_s.strip).empty?
 
     p = Parser.new
 
-    if opts[:matcher]
-      p.configure do |c|
-        c.formats = [opts[:matcher]].flatten
-      end
-    end
+    p.config.formats = [opts[:matcher]].flatten if opts[:matcher]
+    p.config.century = opts[:century] if opts[:century]
 
     p.parse(date)
   end
