@@ -58,7 +58,7 @@ module Quando
 
       month = @date_parts[:month]
 
-      if config.month_num.match(month)
+      month_num = if config.month_num.match(month)
         month.to_i
       else
         month_index = Quando::Config::MONTHS.find_index do |month_name|
@@ -68,6 +68,8 @@ module Quando
 
         month_index + 1 if month_index
       end
+
+      month_num if (1..12).include?(month_num)
     end
 
     # @return [Integer, nil]
@@ -76,6 +78,7 @@ module Quando
       return unless found?(:day)
 
       day = @date_parts[:day].to_i
+
       day if (1..31).include?(day)
     end
 
