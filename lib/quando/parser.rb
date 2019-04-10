@@ -48,7 +48,7 @@ module Quando
       return unless found?(:year)
 
       year = @date_parts[:year].to_i
-      year < 100 ? year + config.century : year
+      year < 100 ? year + config.century * 100 : year
     end
 
     # @return [Integer, nil]
