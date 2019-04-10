@@ -17,8 +17,17 @@ module Quando
 
     p = Parser.new
 
-    p.config.formats = [opts[:matcher]].flatten if opts[:matcher]
-    p.config.century = opts[:century] if opts[:century]
+    if opts[:matcher]
+      p.configure do |c|
+        c.formats = [opts[:matcher]].flatten
+      end
+    end
+
+    if opts[:century]
+      p.configure do |c|
+        c.century = opts[:century]
+      end
+    end
 
     p.parse(date)
   end
