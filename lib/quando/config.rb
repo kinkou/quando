@@ -14,7 +14,7 @@ module Quando
     attr_accessor *OPTIONS
 
     def initialize
-      @century = 20
+      @century = 2000
 
       @dlm = /[ -.\/]+/
       @year = /(?<year> \d{4})/x
