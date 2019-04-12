@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Quando
-
   class Parser
 
     def initialize
@@ -40,11 +39,7 @@ module Quando
 
     # @return [Integer, nil]
     def detect_year
-      unless searched?(:year)
-        return Time.current.year if Time.respond_to?(:current)
-        return Time.now.getlocal.year
-      end
-
+      return Time.now.getlocal.year unless wanted?(:year)
       return unless found?(:year)
 
       year = @date_parts[:year].to_i
@@ -53,7 +48,7 @@ module Quando
 
     # @return [Integer, nil]
     def detect_month
-      return 1 unless searched?(:month)
+      return 1 unless wanted?(:month)
       return unless found?(:month)
 
       month = @date_parts[:month]
@@ -74,7 +69,7 @@ module Quando
 
     # @return [Integer, nil]
     def detect_day
-      return 1 unless searched?(:day)
+      return 1 unless wanted?(:day)
       return unless found?(:day)
 
       day = @date_parts[:day].to_i
@@ -88,10 +83,9 @@ module Quando
     end
 
     # @param date_part [Symbol]
-    def searched?(date_part)
+    def wanted?(date_part)
       !!@current_format.named_captures[date_part.to_s]
     end
 
   end
-
 end
