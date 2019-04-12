@@ -16,7 +16,7 @@ module Quando
     def initialize
       @century = 2000
 
-      @dlm = /[ -.\/]+/
+      @dlm = /[- .\/]+/
       @year = /(?<year> \d{4})/x
       @year2 = /(?<year> \d{2})/x
       @month_num = /(?<month> 1[0-2] | 0?[1-9])/x
