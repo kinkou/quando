@@ -53,18 +53,16 @@ module Quando
 
       month = @date_parts[:month]
 
-      month_num = if config.month_num.match(month)
-        month.to_i
-      else
-        month_index = Quando::Config::MONTHS.find_index do |month_name|
-          month_name_rx = config.send(month_name)
-          month_name_rx.match(month)
-        end
-
-        month_index + 1 if month_index
+      month_index = Quando::Config::MONTHS.find_index do |month_name|
+        config.send(month_name) =~ month
       end
 
-      month_num if (1..12).include?(month_num)
+      if month_index
+        month_index += 1
+        return month_index if valid_month?(month_index)
+      end
+
+      month.to_i if valid_month?(month)
     end
 
     # @return [Integer, nil]
@@ -73,8 +71,7 @@ module Quando
       return unless found?(:day)
 
       day = @date_parts[:day].to_i
-
-      day if (1..31).include?(day)
+      day if valid_day?(day)
     end
 
     # @param date_part [Symbol]
@@ -84,7 +81,17 @@ module Quando
 
     # @param date_part [Symbol]
     def wanted?(date_part)
-      !!@current_format.named_captures[date_part.to_s]
+      @current_format.names.include?(date_part.to_s)
+    end
+
+    # @param value [Integer]
+    def valid_month?(value)
+      (1..12).include?(value.to_i)
+    end
+
+    # @param value [Integer]
+    def valid_day?(value)
+      (1..31).include?(value.to_i)
     end
 
   end
