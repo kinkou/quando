@@ -1,4 +1,4 @@
-![Quando](quando.png "Quando")
+# Quando
 
 [![Gem Version](https://badge.fury.io/rb/quando.svg)](https://badge.fury.io/rb/quando)
 [![Build Status](https://semaphoreci.com/api/v1/kinkou/quando/branches/master/shields_badge.svg)](https://semaphoreci.com/kinkou/quando)
