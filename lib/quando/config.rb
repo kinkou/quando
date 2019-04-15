@@ -38,7 +38,7 @@ module Quando
       uniupdate!
     end
 
-    # Sets @month_txt which is a compound of all month regexps and matches any month name
+    # Sets @month_txt, a compound of all month regexps that matches any month name
     def unimonth!
       all_months_txt_rxs = MONTHS.map { |m| instance_variable_get("@#{m}".to_sym) }.join('|')
       @month_txt = Regexp.new("(?<month>#{all_months_txt_rxs})", true)

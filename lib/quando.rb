@@ -9,8 +9,8 @@ module Quando
 
   # @param date [String]
   # @param opts [Hash]
-  # @option opts [Regexp, Array<Regexp>] :matcher (nil)
-  # @option opts [Integer] :century (nil)
+  # @option opts [Regexp, Array<Regexp>] :matcher
+  # @option opts [Integer] :century
   # @return [Date, nil]
   def self.parse(date, opts = {})
     return if (date = date.to_s.strip).empty?

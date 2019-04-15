@@ -21,11 +21,11 @@ module Quando
     # @param text_date [String]
     # @return [Date, nil]
     def parse(text_date)
-      config.formats.each do |rx|
-        @date_parts = text_date.match(rx)
+      config.formats.each do |regexp|
+        @date_parts = text_date.match(regexp)
         next unless @date_parts
 
-        @current_format = rx
+        @current_format = regexp
         year, month, day = detect_year, detect_month, detect_day
         next unless (year && month && day)
 
