@@ -156,6 +156,24 @@ RSpec.describe Quando do
 
         unfreeze_time
       end
+
+      it 'Parses negative years' do
+        matcher  = /#{Quando.config.day} #{Quando.config.month_num} (?<year>-?\d+)/
+        
+        expect(Quando.parse '2 3 16', matcher: matcher, century: 1).to eq(Date.new(16, 3, 2))
+        expect(Quando.parse '2 3 -16', matcher: matcher, century: -1).to eq(Date.new(-16, 3, 2))
+
+        expect(Quando.parse '2 3 16', matcher: matcher, century: 2).to eq(Date.new(116, 3, 2))
+        expect(Quando.parse '2 3 -16', matcher: matcher, century: -2).to eq(Date.new(-116, 3, 2))
+        
+        expect(Quando.parse '2 3 16', matcher: matcher, century: 16).to eq(Date.new(1516, 3, 2))
+        expect(Quando.parse '2 3 -16', matcher: matcher, century: -16).to eq(Date.new(-1516, 3, 2))
+        
+        expect(Quando.parse '2 3 616', matcher: matcher).to eq(Date.new(616, 3, 2))
+        expect(Quando.parse '2 3 -616', matcher: matcher).to eq(Date.new(-616, 3, 2))
+
+        expect(Quando.parse '2 3 -1616', matcher: matcher).to eq(Date.new(-1616, 3, 2))
+      end
     end
 
     describe 'Delimiter' do
@@ -309,15 +327,28 @@ RSpec.describe Quando do
 
       it 'Default is 21' do
         expect(Quando.parse('14.4.65')).to eq(Date.new(2065, 4, 14))
+        expect(Quando.parse('14.4.65', century: nil)).to eq(Date.new(2065, 4, 14))
       end
 
       it 'Can be adjusted via century option in config' do
-        Quando.config.century = 1900
+        Quando.config.century = 20
         expect(Quando.parse('14.4.65')).to eq(d1965_4_14)
       end
 
       it 'Can be adjusted via Quando.parse params' do
-        expect(Quando.parse('14.4.65', century: 1900)).to eq(d1965_4_14)
+        expect(Quando.parse('14.4.65', century: 20)).to eq(d1965_4_14)
+      end
+
+      it 'Assumes century 0 is century 1' do
+        expect(Quando.parse '2 3 16', century: 0).to eq(Date.new(16, 3, 2))
+      end
+
+      it 'Reset to default for nil and 0' do
+        Quando.config.century = 0
+        expect(Quando.config.century).to eq(1)
+
+        Quando.config.century = nil
+        expect(Quando.config.century).to eq(21)
       end
     end
 

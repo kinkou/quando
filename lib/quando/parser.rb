@@ -43,7 +43,7 @@ module Quando
       return unless found?(:year)
 
       year = @date_parts[:year].to_i
-      year < 100 ? year + config.century : year
+      year.abs < 100 ? year + century_to_hundreds : year
     end
 
     # @return [Integer, nil]
@@ -92,6 +92,10 @@ module Quando
     # @param value [Integer]
     def valid_day?(value)
       (1..31).include?(value.to_i)
+    end
+
+    def century_to_hundreds
+      (config.century > 0 ? config.century - 1 : config.century + 1) * 100
     end
 
   end

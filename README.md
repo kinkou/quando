@@ -152,7 +152,7 @@ Quando.config.formats = [
 Quando.parse('04.2019') #=> #<Date: 2019-04-01>
 ```
 
-If there is a named capture ```:year```, it is used in the result. If the format matcher did not define such named group, current UTC year is used. If the captured value is less than ```100``` (which is the case for years written as 2-digit numbers), Quando will add a value from ```Quando.config.century``` (defaults to ```2000```), effectively converting, for example, ```18``` to ```2018``` (ok, it's not really a century, but rather a *nittonhundratalet*, but let's keep things simple). Be mindful of this behaviour, adjusting ```Quando.config.century``` accordingly:
+If there is a named capture ```:year```, it is used in the result. If the format matcher did not define such named group, current UTC year is used. If the captured value is less than ```100``` (which is the case for years written as 2-digit numbers), Quando will use the ```Quando.config.century``` setting (defaults to ```21```), effectively converting, for example, ```18``` to ```2018```. Be mindful of this behaviour, adjusting ```Quando.config.century``` accordingly:
 
 ```ruby
 Quando.config.formats = [Quando.config.year]
@@ -161,9 +161,9 @@ Quando.parse('2019') #=> #<Date: 2019-01-01>
 Quando.config.formats = [Quando.config.year2]
 Quando.parse('65') #=> #<Date: 2065-01-01>
 
-Quando.parse('65', century: 1900) #=> #<Date: 1965-01-01>
+Quando.parse('65', century: 20) #=> #<Date: 1965-01-01>
 # or
-Quando.config.century = 1900
+Quando.config.century = 20
 Quando.parse('65') #=> #<Date: 1965-01-01>
 ```
 

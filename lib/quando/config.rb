@@ -7,15 +7,14 @@ module Quando
     MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
     AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num]
     COMPOUND = [:month_txt, :formats]
-    OPTIONS = [*AUTOUPDATE, *COMPOUND, :century]
+    OPTIONS = [*AUTOUPDATE, *COMPOUND]
+    CENTURY = 21
 
     private_constant :AUTOUPDATE, :COMPOUND, :OPTIONS
 
     attr_accessor *OPTIONS
 
     def initialize
-      @century = 2000
-
       @dlm = /[- .\/]+/
       @year = /(?<year>\d{4})/
       @year2 = /(?<year>\d{2})/
@@ -34,6 +33,8 @@ module Quando
       @oct = /OCT(?:OBER)?/i
       @nov = /NOV(?:EMBER)?/i
       @dec = /DEC(?:EMBER)?/i
+
+      self.century=(CENTURY)
 
       uniupdate!
     end
@@ -64,6 +65,17 @@ module Quando
         # April, DECEMBER, sep., …
         /^\s* #{@month_txt} \s*$/xi,
       ]
+    end
+
+    # @return [Integer]
+    def century
+      @century
+    end
+
+    # @param value [Integer]
+    # @return [Integer]
+    def century=(value)
+      @century = (value == 0 ? 1 : value) || CENTURY
     end
 
     # A single method to update all compound matchers when a part matcher was changed
