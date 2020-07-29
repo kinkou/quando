@@ -204,8 +204,16 @@ RSpec.describe Quando do
   end
 
   describe 'Configuration' do
-    let(:random_string) { SecureRandom.hex(3) }
-    let(:random_matcher_name) { Quando::Config.const_get(:AUTOUPDATE).sample }
+    def get_random_string
+      SecureRandom.hex(3)
+    end
+
+    def get_random_matcher_name
+      Quando::Config.const_get(:AUTOUPDATE).sample
+    end
+
+    let(:random_string) { get_random_string }
+    let(:random_matcher_name) { get_random_matcher_name }
 
     def setter_name_for(name)
       "#{name}=".to_sym
@@ -249,12 +257,28 @@ RSpec.describe Quando do
     end
 
     describe 'Via Quando::Parser.new.configure' do
+      def get_parser_instance
+        Quando::Parser.new
+      end
+
       it 'Does not change class-level config' do
         original_matcher = Quando.config.send(random_matcher_name)
-        parser_instance = Quando::Parser.new
-        parser_instance.configure { |c| c.send(setter_name_for(random_matcher_name), random_string) }
+        instance = get_parser_instance
+        instance.configure { |c| c.send(setter_name_for(random_matcher_name), random_string) }
         expect(Quando.config.send(random_matcher_name)).to eq(original_matcher)
-        expect(parser_instance.config.send(random_matcher_name)).to eq(random_string)
+        expect(instance.config.send(random_matcher_name)).to eq(random_string)
+      end
+
+      it 'Allows use #configure many times preserving all settings' do
+        random_string2 = get_random_string
+        until (random_matcher_name2 = get_random_matcher_name) != random_matcher_name do end
+
+        instance = get_parser_instance
+        instance.configure { |c| c.send(setter_name_for(random_matcher_name), random_string) }
+        instance.configure { |c| c.send(setter_name_for(random_matcher_name2), random_string2) }
+
+        expect(instance.config.send(random_matcher_name)).to eq(random_string)
+        expect(instance.config.send(random_matcher_name2)).to eq(random_string2)
       end
     end
 

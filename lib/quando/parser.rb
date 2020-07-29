@@ -9,7 +9,7 @@ module Quando
 
     # @return [Quando::Parser]
     def configure
-      yield(@config = Quando.config.dup)
+      yield(@config ||= Quando.config.dup)
       self
     end
 
