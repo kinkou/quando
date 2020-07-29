@@ -39,7 +39,7 @@ module Quando
 
     # @return [Integer, nil]
     def detect_year
-      return Time.now.getlocal.year unless wanted?(:year)
+      return Time.now.utc.year unless wanted?(:year)
       return unless found?(:year)
 
       year = @date_parts[:year].to_i

@@ -7,6 +7,37 @@ require 'securerandom'
 RSpec.describe Quando do
   let(:d1965_4_14) { Date.new(1965, 4, 14) }
 
+  def current_year
+    Time.now.utc.year
+  end
+
+  def freeze_time(time)
+    Time.class_exec do
+      @_quando_time = time
+
+      class << self
+        def frozen_now
+          @_quando_time
+        end
+        
+        alias_method :original_now, :now
+        alias_method :now, :frozen_now
+      end
+    end
+  end
+
+  def unfreeze_time
+    Time.class_exec do
+      class << self
+        alias_method :now, :original_now
+        remove_method :frozen_now
+        remove_method :original_now
+      end
+
+      remove_instance_variable(:@_quando_time)
+    end
+  end
+
   describe 'Default matchers' do
     describe 'Day' do
       it 'Parses 1-digit unpadded' do
@@ -112,6 +143,19 @@ RSpec.describe Quando do
         unanchored = /#{Quando.config.day} \. #{Quando.config.month_num} \. #{Quando.config.year}/xi
         expect(Quando.parse '13.12.12345', matcher: unanchored).to eq(Date.new(1234, 12, 13))
       end
+
+      it 'Uses current UTC year for yearless dates' do
+        offset = 3 * 60 * 60 # +3 hours
+        moment_x = Time.new(2020, 1, 1, 0, 0, 0, offset) # Jan 1 2020 00:00:00 +0300 == Dec 31 2019 21:00:00 +0000
+        freeze_time(moment_x)
+
+        expect(Time.now.year).to eq(2020)
+        expect(Time.now.utc.year).to eq(2019)
+        matcher = /#{Quando.config.day}\.#{Quando.config.month_num}/
+        expect(Quando.parse '2.3', matcher: matcher).to eq(Date.new(2019, 3, 2))
+
+        unfreeze_time
+      end
     end
 
     describe 'Delimiter' do
@@ -150,7 +194,7 @@ RSpec.describe Quando do
       end
 
       it 'Matches @month_txt' do
-        expect(Quando.parse 'August').to eq(Date.new(Time.now.getlocal.year, 8, 1))
+        expect(Quando.parse 'August').to eq(Date.new(current_year, 8, 1))
       end
 
       it 'Does not match undefined ones' do
@@ -277,84 +321,84 @@ RSpec.describe Quando do
         expect(Quando.parse('3 января 1970')).to eq(Date.new(1970, 1, 3))
         expect(Quando.parse('Январь 1970')).to eq(Date.new(1970, 1, 1))
         expect(Quando.parse('янв.1970')).to eq(Date.new(1970, 1, 1))
-        expect(Quando.parse('ЯНВ')).to eq(Date.new(Time.now.getlocal.year, 1, 1))
+        expect(Quando.parse('ЯНВ')).to eq(Date.new(current_year, 1, 1))
       end
 
       it 'Match February' do
         expect(Quando.parse('4 февраля 1971')).to eq(Date.new(1971, 2, 4))
         expect(Quando.parse('Февраль-1971')).to eq(Date.new(1971, 2, 1))
         expect(Quando.parse('фев.1971')).to eq(Date.new(1971, 2, 1))
-        expect(Quando.parse('ФЕВ')).to eq(Date.new(Time.now.getlocal.year, 2, 1))
+        expect(Quando.parse('ФЕВ')).to eq(Date.new(current_year, 2, 1))
       end
 
       it 'Match March' do
         expect(Quando.parse('4 марта 1972')).to eq(Date.new(1972, 3, 4))
         expect(Quando.parse('Март/1972')).to eq(Date.new(1972, 3, 1))
         expect(Quando.parse('мар.1972')).to eq(Date.new(1972, 3, 1))
-        expect(Quando.parse('МАР')).to eq(Date.new(Time.now.getlocal.year, 3, 1))
+        expect(Quando.parse('МАР')).to eq(Date.new(current_year, 3, 1))
       end
 
       it 'Match April' do
         expect(Quando.parse('5 апреля 1973')).to eq(Date.new(1973, 4, 5))
         expect(Quando.parse('Апрель 1973')).to eq(Date.new(1973, 4, 1))
         expect(Quando.parse('апр.1973')).to eq(Date.new(1973, 4, 1))
-        expect(Quando.parse('АПР')).to eq(Date.new(Time.now.getlocal.year, 4, 1))
+        expect(Quando.parse('АПР')).to eq(Date.new(current_year, 4, 1))
       end
 
       it 'Match May' do
         expect(Quando.parse('5 мая 1973')).to eq(Date.new(1973, 5, 5))
         expect(Quando.parse('Май-1973')).to eq(Date.new(1973, 5, 1))
         expect(Quando.parse('май.1973')).to eq(Date.new(1973, 5, 1))
-        expect(Quando.parse('МАЙ')).to eq(Date.new(Time.now.getlocal.year, 5, 1))
+        expect(Quando.parse('МАЙ')).to eq(Date.new(current_year, 5, 1))
       end
 
       it 'Match June' do
         expect(Quando.parse('5 июня 1973')).to eq(Date.new(1973, 6, 5))
         expect(Quando.parse('Июнь/1973')).to eq(Date.new(1973, 6, 1))
         expect(Quando.parse('июн.1973')).to eq(Date.new(1973, 6, 1))
-        expect(Quando.parse('ИЮН')).to eq(Date.new(Time.now.getlocal.year, 6, 1))
+        expect(Quando.parse('ИЮН')).to eq(Date.new(current_year, 6, 1))
       end
 
       it 'Match July' do
         expect(Quando.parse('3 июля 1970')).to eq(Date.new(1970, 7, 3))
         expect(Quando.parse('Июль 1970')).to eq(Date.new(1970, 7, 1))
         expect(Quando.parse('июл.1970')).to eq(Date.new(1970, 7, 1))
-        expect(Quando.parse('ИЮЛ')).to eq(Date.new(Time.now.getlocal.year, 7, 1))
+        expect(Quando.parse('ИЮЛ')).to eq(Date.new(current_year, 7, 1))
       end
 
       it 'Match August' do
         expect(Quando.parse('4 августа 1971')).to eq(Date.new(1971, 8, 4))
         expect(Quando.parse('Август-1971')).to eq(Date.new(1971, 8, 1))
         expect(Quando.parse('авг.1971')).to eq(Date.new(1971, 8, 1))
-        expect(Quando.parse('АВГ')).to eq(Date.new(Time.now.getlocal.year, 8, 1))
+        expect(Quando.parse('АВГ')).to eq(Date.new(current_year, 8, 1))
       end
 
       it 'Match September' do
         expect(Quando.parse('4 сентября 1972')).to eq(Date.new(1972, 9, 4))
         expect(Quando.parse('Сентябрь/1972')).to eq(Date.new(1972, 9, 1))
         expect(Quando.parse('сен.1972')).to eq(Date.new(1972, 9, 1))
-        expect(Quando.parse('СЕН')).to eq(Date.new(Time.now.getlocal.year, 9, 1))
+        expect(Quando.parse('СЕН')).to eq(Date.new(current_year, 9, 1))
       end
 
       it 'Match October' do
         expect(Quando.parse('5 октября 1973')).to eq(Date.new(1973, 10, 5))
         expect(Quando.parse('Октябрь 1973')).to eq(Date.new(1973, 10, 1))
         expect(Quando.parse('окт.1973')).to eq(Date.new(1973, 10, 1))
-        expect(Quando.parse('ОКТ')).to eq(Date.new(Time.now.getlocal.year, 10, 1))
+        expect(Quando.parse('ОКТ')).to eq(Date.new(current_year, 10, 1))
       end
 
       it 'Match November' do
         expect(Quando.parse('5 ноября 1973')).to eq(Date.new(1973, 11, 5))
         expect(Quando.parse('Ноябрь-1973')).to eq(Date.new(1973, 11, 1))
         expect(Quando.parse('ноя.1973')).to eq(Date.new(1973, 11, 1))
-        expect(Quando.parse('НОЯ')).to eq(Date.new(Time.now.getlocal.year, 11, 1))
+        expect(Quando.parse('НОЯ')).to eq(Date.new(current_year, 11, 1))
       end
 
       it 'Match December' do
         expect(Quando.parse('5 декабря 1973')).to eq(Date.new(1973, 12, 5))
         expect(Quando.parse('Декабрь/1973')).to eq(Date.new(1973, 12, 1))
         expect(Quando.parse('дек.1973')).to eq(Date.new(1973, 12, 1))
-        expect(Quando.parse('ДЕК')).to eq(Date.new(Time.now.getlocal.year, 12, 1))
+        expect(Quando.parse('ДЕК')).to eq(Date.new(current_year, 12, 1))
       end
     end
   end
@@ -372,7 +416,7 @@ RSpec.describe Quando do
 
       it 'Year, then assumes current year (local time)' do
         Quando.configure { |c| c.formats = [/#{c.month_txt}, #{c.day}/] }
-        expect(Quando.parse('April, 14')).to eq(Date.new(Time.now.getlocal.year, 4, 14))
+        expect(Quando.parse('April, 14')).to eq(Date.new(current_year, 4, 14))
       end
     end
   end
