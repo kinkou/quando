@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+.gem
 bundle
 docker-compose.yml
 pkg
