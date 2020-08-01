@@ -1,6 +1,6 @@
 .DS_Store
-.idea
-.gem
+.editorconfig
+.vscode
 bundle
 docker-compose.yml
 pkg
