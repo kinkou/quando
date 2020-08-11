@@ -34,7 +34,7 @@ module Quando
       @nov = /NOV(?:EMBER)?/i
       @dec = /DEC(?:EMBER)?/i
 
-      self.century=(CENTURY)
+      self.century=(CENTURY) # method call
 
       uniupdate!
     end
