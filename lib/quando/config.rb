@@ -10,7 +10,7 @@ module Quando
     OPTIONS = [*AUTOUPDATE, *COMPOUND]
     CENTURY = 21
 
-    private_constant :AUTOUPDATE, :COMPOUND, :OPTIONS
+    private_constant :AUTOUPDATE, :COMPOUND, :OPTIONS, :CENTURY
 
     attr_accessor *OPTIONS
 
