@@ -5,8 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-    - name: Build and test with RSpec
-      run: |
-        bundle exec rails db:setup
-        bundle exec rails assets:precompile
-        bundle exec rspec
+      - name: Build and test with RSpec
+      - uses: actions/checkout@v2
+        run: |
+          bundle exec rails db:setup
+          bundle exec rails assets:precompile
+          bundle exec rspec
