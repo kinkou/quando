@@ -1,0 +1,16 @@
+on: [push, pull_request]
+name: CI
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - name: Run rspec
+        run: |
+          bundle install
+          bundle exec rspec
