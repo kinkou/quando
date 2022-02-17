@@ -7,6 +7,10 @@ jobs:
     steps:
       - name: Build and test with RSpec
       - uses: actions/checkout@v2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
         run: |
           bundle exec rails db:setup
           bundle exec rails assets:precompile
