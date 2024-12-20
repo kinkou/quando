@@ -1,9 +1,5 @@
 # Quando
 
-[![Gem Version](https://badge.fury.io/rb/quando.svg)](https://badge.fury.io/rb/quando)
-[![Build Status](https://semaphoreci.com/api/v1/kinkou/quando/branches/master/shields_badge.svg)](https://semaphoreci.com/kinkou/quando)
-[![Maintainability](https://api.codeclimate.com/v1/badges/b0653fc45ec54c23e05c/maintainability)](https://codeclimate.com/github/kinkou/quando/maintainability)
-
 Quando is a configurable date parser which picks up where ```Date.strptime``` stops. It was made to work with non-standard, multi-language dates (that is, dates recorded by humans in languages other than English) but can be used for almost any date format.
 
 A typical use case for Quando is dealing with input like:
