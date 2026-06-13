@@ -67,9 +67,7 @@ module Quando
     end
 
     # @return [Integer]
-    def century
-      @century
-    end
+    attr_reader :century
 
     # @param value [Integer]
     # @return [Integer]
