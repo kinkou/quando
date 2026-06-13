@@ -11,7 +11,7 @@ module Quando
 
     private_constant :AUTOUPDATE, :COMPOUND, :OPTIONS, :CENTURY
 
-    attr_accessor *OPTIONS
+    attr_accessor(*OPTIONS)
 
     def initialize
       @dlm = /[- .\/]+/
