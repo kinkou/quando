@@ -41,7 +41,7 @@ module Quando
 
     # Sets @month_txt, a compound of all month regexps that matches any month name
     def unimonth!
-      all_months_txt_rxs = MONTHS.map { |m| instance_variable_get("@#{m}".to_sym) }.join('|')
+      all_months_txt_rxs = MONTHS.map { |m| instance_variable_get(:"@#{m}") }.join('|')
       @month_txt = Regexp.new("(?<month>#{all_months_txt_rxs})", true)
     end
 
@@ -92,8 +92,8 @@ module Quando
       #   @jan = regexp
       #   uniupdate!
       # end
-      define_method("#{var}=".to_sym) do |regexp|
-        var_name = "@#{var}".to_sym
+      define_method(:"#{var}=") do |regexp|
+        var_name = :"@#{var}"
         return regexp if instance_variable_get(var_name) == regexp
         instance_variable_set(var_name, regexp)
         uniupdate!

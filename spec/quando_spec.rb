@@ -233,7 +233,7 @@ RSpec.describe Quando do
     let(:random_matcher_name) { get_random_matcher_name }
 
     def setter_name_for(name)
-      "#{name}=".to_sym
+      :"#{name}="
     end
 
     describe 'Compound matcher @month_txt' do
