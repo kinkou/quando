@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Quando
+  # Tries each configured format and extracts day/month/year from the first match.
   class Parser
     def initialize
       @config = nil

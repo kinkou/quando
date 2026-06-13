@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+# Holds the memoized class-level configuration ({Quando.config}).
 module Quando
+  # Stores all matchers and rebuilds the compound ones whenever a part changes.
   class Config
     MONTHS = %i[jan feb mar apr may jun jul aug sep oct nov dec].freeze
     AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num].freeze

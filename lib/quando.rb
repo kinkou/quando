@@ -5,6 +5,7 @@ require 'quando/version'
 require 'quando/config'
 require 'quando/parser'
 
+# Public entry point: parses non-standard, human-written dates via {Quando.parse}.
 module Quando
   # @param date [String]
   # @param opts [Hash]
