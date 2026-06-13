@@ -62,7 +62,7 @@ module Quando
         /^\s* #{@day} #{@dlm} #{@month_num} #{@dlm} #{@year2} \s*$/xi,
 
         # April, DECEMBER, sep., …
-        /^\s* #{@month_txt} \s*$/xi,
+        /^\s* #{@month_txt} \s*$/xi
       ]
     end
 
