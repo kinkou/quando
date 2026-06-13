@@ -2,7 +2,7 @@
 
 require 'securerandom'
 
-RSpec.describe Quando do
+RSpec.describe Quando, :aggregate_failures do
   let(:reference_date) { Date.new(1965, 4, 14) }
 
   def current_year
