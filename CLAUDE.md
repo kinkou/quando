@@ -13,13 +13,15 @@ All commands run inside the Nix dev shell (`nix develop`), which provides Ruby 3
 ```bash
 nix develop           # enter the dev shell (or prefix one-offs: nix develop -c <cmd>)
 bundle install        # install dependencies (into ./vendor/bundle)
-bundle exec rake      # run the full spec suite (default rake task)
-bundle exec rspec     # same, via rspec directly
+bundle exec rake      # run the default task: specs + RuboCop
+bundle exec rspec     # run just the spec suite
 bundle exec rspec spec/quando_spec.rb:42   # run the single example at line 42
+bundle exec rubocop   # run just the linter
+bundle exec rubocop -a # autocorrect safe offenses
 bin/console           # IRB session with quando loaded
 ```
 
-There is no separate lint step; `.editorconfig` defines the style.
+Linting is RuboCop (with the rubocop-rake and rubocop-rspec plugins), configured in `.rubocop.yml` on a near-stock config; `.editorconfig` defines the base editor style. `.rubocop_todo.yml` grandfathers a couple of `Metrics` offenses in `lib/` that are deferred until the config-objects refactor.
 
 ## Architecture
 
