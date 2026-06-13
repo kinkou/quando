@@ -3,7 +3,7 @@
 require 'securerandom'
 
 RSpec.describe Quando do
-  let(:d1965_4_14) { Date.new(1965, 4, 14) }
+  let(:reference_date) { Date.new(1965, 4, 14) }
 
   def current_year
     Time.now.utc.year
@@ -65,11 +65,11 @@ RSpec.describe Quando do
 
     describe 'Numerical month' do
       it 'Parses 1-digit unpadded' do
-        expect(described_class.parse('14.4.1965')).to eq(d1965_4_14)
+        expect(described_class.parse('14.4.1965')).to eq(reference_date)
       end
 
       it 'Parses 1-digit 0-padded' do
-        expect(described_class.parse('14.04.1965')).to eq(d1965_4_14)
+        expect(described_class.parse('14.04.1965')).to eq(reference_date)
       end
 
       it 'Parses 2-digit' do
@@ -176,12 +176,12 @@ RSpec.describe Quando do
 
     describe 'Delimiter' do
       it 'Matches space dash dot slash' do
-        expect(described_class.parse('14 April 1965')).to eq(d1965_4_14)
-        expect(described_class.parse('14-Apr-1965')).to eq(d1965_4_14)
-        expect(described_class.parse('14.4.1965')).to eq(d1965_4_14)
-        expect(described_class.parse('14/04/1965')).to eq(d1965_4_14)
-        expect(described_class.parse('14 04-1965')).to eq(d1965_4_14)
-        expect(described_class.parse('14.04/1965')).to eq(d1965_4_14)
+        expect(described_class.parse('14 April 1965')).to eq(reference_date)
+        expect(described_class.parse('14-Apr-1965')).to eq(reference_date)
+        expect(described_class.parse('14.4.1965')).to eq(reference_date)
+        expect(described_class.parse('14/04/1965')).to eq(reference_date)
+        expect(described_class.parse('14 04-1965')).to eq(reference_date)
+        expect(described_class.parse('14.04/1965')).to eq(reference_date)
       end
 
       it 'Does not match anything else' do
@@ -194,11 +194,11 @@ RSpec.describe Quando do
 
     describe 'Formats' do
       it 'Matches @day @dlm @month_num @dlm @year' do
-        expect(described_class.parse('14 04 1965')).to eq(d1965_4_14)
+        expect(described_class.parse('14 04 1965')).to eq(reference_date)
       end
 
       it 'Matches @day @dlm @month_txt @dlm @year' do
-        expect(described_class.parse('14 April 1965')).to eq(d1965_4_14)
+        expect(described_class.parse('14 April 1965')).to eq(reference_date)
       end
 
       it 'Matches @month_txt @dlm @year' do
@@ -330,11 +330,11 @@ RSpec.describe Quando do
 
       it 'Can be adjusted via century option in config' do
         described_class.config.century = 20
-        expect(described_class.parse('14.4.65')).to eq(d1965_4_14)
+        expect(described_class.parse('14.4.65')).to eq(reference_date)
       end
 
       it 'Can be adjusted via Quando.parse params' do
-        expect(described_class.parse('14.4.65', century: 20)).to eq(d1965_4_14)
+        expect(described_class.parse('14.4.65', century: 20)).to eq(reference_date)
       end
 
       it 'Assumes century 0 is century 1' do
