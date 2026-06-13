@@ -94,6 +94,7 @@ module Quando
       define_method(:"#{var}=") do |regexp|
         var_name = :"@#{var}"
         return regexp if instance_variable_get(var_name) == regexp
+
         instance_variable_set(var_name, regexp)
         uniupdate!
       end
