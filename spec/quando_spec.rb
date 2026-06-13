@@ -40,46 +40,46 @@ RSpec.describe Quando do
   describe 'Default matchers' do
     describe 'Day' do
       it 'Parses 1-digit unpadded' do
-        expect(Quando.parse '1.10.2020').to eq(Date.new(2020, 10, 1))
+        expect(Quando.parse('1.10.2020')).to eq(Date.new(2020, 10, 1))
       end
 
       it 'Parses 1-digit 0-padded' do
-        expect(Quando.parse '01.10.2020').to eq(Date.new(2020, 10, 1))
+        expect(Quando.parse('01.10.2020')).to eq(Date.new(2020, 10, 1))
       end
 
       it 'Parses 2-digit' do
-        expect(Quando.parse '31.10.2020').to eq(Date.new(2020, 10, 31))
+        expect(Quando.parse('31.10.2020')).to eq(Date.new(2020, 10, 31))
       end
 
       it 'Does not match out-of-range values' do
-        expect(Quando.parse '0.10.2020').to be_nil
-        expect(Quando.parse '32.10.2020').to be_nil
+        expect(Quando.parse('0.10.2020')).to be_nil
+        expect(Quando.parse('32.10.2020')).to be_nil
       end
 
       it 'Requires anchors to work properly' do
         expect('32'[Quando.config.day]).to eq('3')
 
         unanchored = /#{Quando.config.day} \. #{Quando.config.month_num} \. #{Quando.config.year}/xi
-        expect(Quando.parse '32.10.2020', matcher: unanchored).to eq(Date.new(2020, 10, 2))
+        expect(Quando.parse('32.10.2020', matcher: unanchored)).to eq(Date.new(2020, 10, 2))
       end
     end
 
     describe 'Numerical month' do
       it 'Parses 1-digit unpadded' do
-        expect(Quando.parse '14.4.1965').to eq(d1965_4_14)
+        expect(Quando.parse('14.4.1965')).to eq(d1965_4_14)
       end
 
       it 'Parses 1-digit 0-padded' do
-        expect(Quando.parse '14.04.1965').to eq(d1965_4_14)
+        expect(Quando.parse('14.04.1965')).to eq(d1965_4_14)
       end
 
       it 'Parses 2-digit' do
-        expect(Quando.parse '11.12.2020').to eq(Date.new(2020, 12, 11))
+        expect(Quando.parse('11.12.2020')).to eq(Date.new(2020, 12, 11))
       end
 
       it 'Does not match out-of-range values' do
-        expect(Quando.parse '1.0.2020').to be_nil
-        expect(Quando.parse '1.13.2020').to be_nil
+        expect(Quando.parse('1.0.2020')).to be_nil
+        expect(Quando.parse('1.13.2020')).to be_nil
       end
 
       it 'Requires anchors to work properly' do
@@ -89,58 +89,58 @@ RSpec.describe Quando do
 
     describe 'Textual month' do
       it 'Parses short English month names' do
-        expect(Quando.parse '2 jan 2020').to eq(Date.new(2020, 1, 2))
-        expect(Quando.parse '3 Feb 2020').to eq(Date.new(2020, 2, 3))
-        expect(Quando.parse '4 MAR 2020').to eq(Date.new(2020, 3, 4))
-        expect(Quando.parse '5 apr 2020').to eq(Date.new(2020, 4, 5))
-        expect(Quando.parse '6 May 2020').to eq(Date.new(2020, 5, 6))
-        expect(Quando.parse '7 JUN 2020').to eq(Date.new(2020, 6, 7))
-        expect(Quando.parse '8 jul 2020').to eq(Date.new(2020, 7, 8))
-        expect(Quando.parse '9 Aug 2020').to eq(Date.new(2020, 8, 9))
-        expect(Quando.parse '10 SEP 2020').to eq(Date.new(2020, 9, 10))
-        expect(Quando.parse '11 oct 2020').to eq(Date.new(2020, 10, 11))
-        expect(Quando.parse '12 Nov 2020').to eq(Date.new(2020, 11, 12))
-        expect(Quando.parse '13 DEC 2020').to eq(Date.new(2020, 12, 13))
+        expect(Quando.parse('2 jan 2020')).to eq(Date.new(2020, 1, 2))
+        expect(Quando.parse('3 Feb 2020')).to eq(Date.new(2020, 2, 3))
+        expect(Quando.parse('4 MAR 2020')).to eq(Date.new(2020, 3, 4))
+        expect(Quando.parse('5 apr 2020')).to eq(Date.new(2020, 4, 5))
+        expect(Quando.parse('6 May 2020')).to eq(Date.new(2020, 5, 6))
+        expect(Quando.parse('7 JUN 2020')).to eq(Date.new(2020, 6, 7))
+        expect(Quando.parse('8 jul 2020')).to eq(Date.new(2020, 7, 8))
+        expect(Quando.parse('9 Aug 2020')).to eq(Date.new(2020, 8, 9))
+        expect(Quando.parse('10 SEP 2020')).to eq(Date.new(2020, 9, 10))
+        expect(Quando.parse('11 oct 2020')).to eq(Date.new(2020, 10, 11))
+        expect(Quando.parse('12 Nov 2020')).to eq(Date.new(2020, 11, 12))
+        expect(Quando.parse('13 DEC 2020')).to eq(Date.new(2020, 12, 13))
       end
 
       it 'Parses long English month names' do
-        expect(Quando.parse '2 january 2020').to eq(Date.new(2020, 1, 2))
-        expect(Quando.parse '3 February 2020').to eq(Date.new(2020, 2, 3))
-        expect(Quando.parse '4 MARCH 2020').to eq(Date.new(2020, 3, 4))
-        expect(Quando.parse '5 april 2020').to eq(Date.new(2020, 4, 5))
-        expect(Quando.parse '6 May 2020').to eq(Date.new(2020, 5, 6))
-        expect(Quando.parse '7 JUNE 2020').to eq(Date.new(2020, 6, 7))
-        expect(Quando.parse '8 july 2020').to eq(Date.new(2020, 7, 8))
-        expect(Quando.parse '9 August 2020').to eq(Date.new(2020, 8, 9))
-        expect(Quando.parse '10 SEPTEMBER 2020').to eq(Date.new(2020, 9, 10))
-        expect(Quando.parse '11 october 2020').to eq(Date.new(2020, 10, 11))
-        expect(Quando.parse '12 November 2020').to eq(Date.new(2020, 11, 12))
-        expect(Quando.parse '13 DECEMBER 2020').to eq(Date.new(2020, 12, 13))
+        expect(Quando.parse('2 january 2020')).to eq(Date.new(2020, 1, 2))
+        expect(Quando.parse('3 February 2020')).to eq(Date.new(2020, 2, 3))
+        expect(Quando.parse('4 MARCH 2020')).to eq(Date.new(2020, 3, 4))
+        expect(Quando.parse('5 april 2020')).to eq(Date.new(2020, 4, 5))
+        expect(Quando.parse('6 May 2020')).to eq(Date.new(2020, 5, 6))
+        expect(Quando.parse('7 JUNE 2020')).to eq(Date.new(2020, 6, 7))
+        expect(Quando.parse('8 july 2020')).to eq(Date.new(2020, 7, 8))
+        expect(Quando.parse('9 August 2020')).to eq(Date.new(2020, 8, 9))
+        expect(Quando.parse('10 SEPTEMBER 2020')).to eq(Date.new(2020, 9, 10))
+        expect(Quando.parse('11 october 2020')).to eq(Date.new(2020, 10, 11))
+        expect(Quando.parse('12 November 2020')).to eq(Date.new(2020, 11, 12))
+        expect(Quando.parse('13 DECEMBER 2020')).to eq(Date.new(2020, 12, 13))
       end
     end
 
     describe 'Year' do
       it 'Parses 4-digit year' do
-        expect(Quando.parse '13.12.2020').to eq(Date.new(2020, 12, 13))
+        expect(Quando.parse('13.12.2020')).to eq(Date.new(2020, 12, 13))
       end
 
       it 'Parses 2-digit year' do
-        expect(Quando.parse '13.12.20').to eq(Date.new(2020, 12, 13))
+        expect(Quando.parse('13.12.20')).to eq(Date.new(2020, 12, 13))
       end
 
       it 'Does not parse > 4 digits' do
-        expect(Quando.parse '13.12.12345').to be_nil
+        expect(Quando.parse('13.12.12345')).to be_nil
       end
 
       it 'Does not parse < 2 digits' do
-        expect(Quando.parse '13.12.1').to be_nil
+        expect(Quando.parse('13.12.1')).to be_nil
       end
 
       it 'Requires anchors to work properly' do
         expect('12345'[Quando.config.year]).to eq('1234')
 
         unanchored = /#{Quando.config.day} \. #{Quando.config.month_num} \. #{Quando.config.year}/xi
-        expect(Quando.parse '13.12.12345', matcher: unanchored).to eq(Date.new(1234, 12, 13))
+        expect(Quando.parse('13.12.12345', matcher: unanchored)).to eq(Date.new(1234, 12, 13))
       end
 
       it 'Uses current UTC year for yearless dates' do
@@ -151,7 +151,7 @@ RSpec.describe Quando do
         expect(Time.now.year).to eq(2020)
         expect(Time.now.utc.year).to eq(2019)
         matcher = /#{Quando.config.day}\.#{Quando.config.month_num}/
-        expect(Quando.parse '2.3', matcher: matcher).to eq(Date.new(2019, 3, 2))
+        expect(Quando.parse('2.3', matcher: matcher)).to eq(Date.new(2019, 3, 2))
 
         unfreeze_time
       end
@@ -159,63 +159,63 @@ RSpec.describe Quando do
       it 'Parses negative years' do
         matcher  = /#{Quando.config.day} #{Quando.config.month_num} (?<year>-?\d+)/
         
-        expect(Quando.parse '2 3 16', matcher: matcher, century: 1).to eq(Date.new(16, 3, 2))
-        expect(Quando.parse '2 3 -16', matcher: matcher, century: -1).to eq(Date.new(-16, 3, 2))
+        expect(Quando.parse('2 3 16', matcher: matcher, century: 1)).to eq(Date.new(16, 3, 2))
+        expect(Quando.parse('2 3 -16', matcher: matcher, century: -1)).to eq(Date.new(-16, 3, 2))
 
-        expect(Quando.parse '2 3 16', matcher: matcher, century: 2).to eq(Date.new(116, 3, 2))
-        expect(Quando.parse '2 3 -16', matcher: matcher, century: -2).to eq(Date.new(-116, 3, 2))
+        expect(Quando.parse('2 3 16', matcher: matcher, century: 2)).to eq(Date.new(116, 3, 2))
+        expect(Quando.parse('2 3 -16', matcher: matcher, century: -2)).to eq(Date.new(-116, 3, 2))
         
-        expect(Quando.parse '2 3 16', matcher: matcher, century: 16).to eq(Date.new(1516, 3, 2))
-        expect(Quando.parse '2 3 -16', matcher: matcher, century: -16).to eq(Date.new(-1516, 3, 2))
+        expect(Quando.parse('2 3 16', matcher: matcher, century: 16)).to eq(Date.new(1516, 3, 2))
+        expect(Quando.parse('2 3 -16', matcher: matcher, century: -16)).to eq(Date.new(-1516, 3, 2))
         
-        expect(Quando.parse '2 3 616', matcher: matcher).to eq(Date.new(616, 3, 2))
-        expect(Quando.parse '2 3 -616', matcher: matcher).to eq(Date.new(-616, 3, 2))
+        expect(Quando.parse('2 3 616', matcher: matcher)).to eq(Date.new(616, 3, 2))
+        expect(Quando.parse('2 3 -616', matcher: matcher)).to eq(Date.new(-616, 3, 2))
 
-        expect(Quando.parse '2 3 -1616', matcher: matcher).to eq(Date.new(-1616, 3, 2))
+        expect(Quando.parse('2 3 -1616', matcher: matcher)).to eq(Date.new(-1616, 3, 2))
       end
     end
 
     describe 'Delimiter' do
       it 'Matches space dash dot slash' do
-        expect(Quando.parse '14 April 1965').to eq(d1965_4_14)
-        expect(Quando.parse '14-Apr-1965').to eq(d1965_4_14)
-        expect(Quando.parse '14.4.1965').to eq(d1965_4_14)
-        expect(Quando.parse '14/04/1965').to eq(d1965_4_14)
-        expect(Quando.parse '14 04-1965').to eq(d1965_4_14)
-        expect(Quando.parse '14.04/1965').to eq(d1965_4_14)
+        expect(Quando.parse('14 April 1965')).to eq(d1965_4_14)
+        expect(Quando.parse('14-Apr-1965')).to eq(d1965_4_14)
+        expect(Quando.parse('14.4.1965')).to eq(d1965_4_14)
+        expect(Quando.parse('14/04/1965')).to eq(d1965_4_14)
+        expect(Quando.parse('14 04-1965')).to eq(d1965_4_14)
+        expect(Quando.parse('14.04/1965')).to eq(d1965_4_14)
       end
 
       it 'Does not match anything else' do
-        expect(Quando.parse '14\04\1965').to be_nil
-        expect(Quando.parse '14!04$1965').to be_nil
-        expect(Quando.parse '14%04^1965').to be_nil
-        expect(Quando.parse '14@04#1965').to be_nil
+        expect(Quando.parse('14\04\1965')).to be_nil
+        expect(Quando.parse('14!04$1965')).to be_nil
+        expect(Quando.parse('14%04^1965')).to be_nil
+        expect(Quando.parse('14@04#1965')).to be_nil
       end
     end
 
     describe 'Formats' do
       it 'Matches @day @dlm @month_num @dlm @year' do
-        expect(Quando.parse '14 04 1965').to eq(d1965_4_14)
+        expect(Quando.parse('14 04 1965')).to eq(d1965_4_14)
       end
 
       it 'Matches @day @dlm @month_txt @dlm @year' do
-        expect(Quando.parse '14 April 1965').to eq(d1965_4_14)
+        expect(Quando.parse('14 April 1965')).to eq(d1965_4_14)
       end
 
       it 'Matches @month_txt @dlm @year' do
-        expect(Quando.parse 'May 2020').to eq(Date.new(2020, 5, 1))
+        expect(Quando.parse('May 2020')).to eq(Date.new(2020, 5, 1))
       end
 
       it 'Matches @day @dlm @month_num @dlm @year2' do
-        expect(Quando.parse '2.3.20').to eq(Date.new(2020, 3, 2))
+        expect(Quando.parse('2.3.20')).to eq(Date.new(2020, 3, 2))
       end
 
       it 'Matches @month_txt' do
-        expect(Quando.parse 'August').to eq(Date.new(current_year, 8, 1))
+        expect(Quando.parse('August')).to eq(Date.new(current_year, 8, 1))
       end
 
       it 'Does not match undefined ones' do
-        expect(Quando.parse 'April 14, 1965').to be_nil
+        expect(Quando.parse('April 14, 1965')).to be_nil
       end
     end
   end
@@ -339,7 +339,7 @@ RSpec.describe Quando do
       end
 
       it 'Assumes century 0 is century 1' do
-        expect(Quando.parse '2 3 16', century: 0).to eq(Date.new(16, 3, 2))
+        expect(Quando.parse('2 3 16', century: 0)).to eq(Date.new(16, 3, 2))
       end
 
       it 'Reset to default for nil and 0' do
