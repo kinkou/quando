@@ -21,11 +21,4 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 3.3'
-
-  spec.add_development_dependency 'bundler', '>= 1.15'
-  spec.add_development_dependency 'rake', '~> 13'
-  spec.add_development_dependency 'rspec', '~> 3.13'
-  spec.add_development_dependency 'rubocop', '~> 1.87'
-  spec.add_development_dependency 'rubocop-rake', '~> 0.7'
-  spec.add_development_dependency 'rubocop-rspec', '~> 3.10'
 end
