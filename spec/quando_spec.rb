@@ -18,7 +18,7 @@ RSpec.describe Quando do
         def frozen_now
           @_quando_time
         end
-        
+
         alias_method :original_now, :now
         alias_method :now, :frozen_now
       end
@@ -158,16 +158,16 @@ RSpec.describe Quando do
 
       it 'Parses negative years' do
         matcher  = /#{Quando.config.day} #{Quando.config.month_num} (?<year>-?\d+)/
-        
+
         expect(Quando.parse('2 3 16', matcher: matcher, century: 1)).to eq(Date.new(16, 3, 2))
         expect(Quando.parse('2 3 -16', matcher: matcher, century: -1)).to eq(Date.new(-16, 3, 2))
 
         expect(Quando.parse('2 3 16', matcher: matcher, century: 2)).to eq(Date.new(116, 3, 2))
         expect(Quando.parse('2 3 -16', matcher: matcher, century: -2)).to eq(Date.new(-116, 3, 2))
-        
+
         expect(Quando.parse('2 3 16', matcher: matcher, century: 16)).to eq(Date.new(1516, 3, 2))
         expect(Quando.parse('2 3 -16', matcher: matcher, century: -16)).to eq(Date.new(-1516, 3, 2))
-        
+
         expect(Quando.parse('2 3 616', matcher: matcher)).to eq(Date.new(616, 3, 2))
         expect(Quando.parse('2 3 -616', matcher: matcher)).to eq(Date.new(-616, 3, 2))
 
@@ -259,7 +259,7 @@ RSpec.describe Quando do
       it "Returns Quando's class-level config object" do
         expect(Quando.config).to eq(Quando.instance_variable_get(:@config))
       end
-      
+
       it 'Lets use setter methods directly' do
         Quando.config.send(setter_name_for(random_matcher_name), random_string)
         expect(Quando.config.send(random_matcher_name)).to eq(random_string)
