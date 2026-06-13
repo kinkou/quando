@@ -14,7 +14,7 @@ module Quando
     attr_accessor(*OPTIONS)
 
     def initialize
-      @dlm = /[- .\/]+/
+      @dlm = %r{[- ./]+}
       @year = /(?<year>\d{4})/
       @year2 = /(?<year>\d{2})/
       @month_num = /(?<month> 1[012] | 0?[1-9])/x
