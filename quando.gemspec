@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Sergey Konotopov']
   spec.email         = ['werk@mail.ru']
 
-  spec.summary       = %q{Configurable date parser}
-  spec.description   = %q{Parse dates in any language and format by setting your own recognition patterns}
+  spec.summary       = %q(Configurable date parser)
+  spec.description   = %q(Parse dates in any language and format by setting your own recognition patterns)
   spec.homepage      = 'https://github.com/kinkou/quando'
   spec.license       = 'MIT'
 
