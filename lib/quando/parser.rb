@@ -25,7 +25,9 @@ module Quando
         next unless @date_parts
 
         @current_format = regexp
-        year, month, day = detect_year, detect_month, detect_day
+        year = detect_year
+        month = detect_month
+        day = detect_day
         next unless (year && month && day)
 
         return Date.new(year, month, day)
