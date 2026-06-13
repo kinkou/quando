@@ -120,5 +120,4 @@ module Quando
   end
 
   configure
-
 end

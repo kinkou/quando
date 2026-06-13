@@ -6,7 +6,6 @@ require 'quando/config'
 require 'quando/parser'
 
 module Quando
-
   # @param date [String]
   # @param opts [Hash]
   # @option opts [Regexp, Array<Regexp>] :matcher
@@ -31,5 +30,4 @@ module Quando
 
     p.parse(date)
   end
-
 end
