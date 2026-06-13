@@ -2,10 +2,10 @@
 
 module Quando
   class Config
-    MONTHS = %i[jan feb mar apr may jun jul aug sep oct nov dec]
-    AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num]
-    COMPOUND = %i[month_txt formats]
-    OPTIONS = [*AUTOUPDATE, *COMPOUND]
+    MONTHS = %i[jan feb mar apr may jun jul aug sep oct nov dec].freeze
+    AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num].freeze
+    COMPOUND = %i[month_txt formats].freeze
+    OPTIONS = [*AUTOUPDATE, *COMPOUND].freeze
     CENTURY = 21
 
     private_constant :AUTOUPDATE, :COMPOUND, :OPTIONS, :CENTURY
