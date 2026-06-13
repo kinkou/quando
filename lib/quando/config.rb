@@ -3,9 +3,9 @@
 
 module Quando
   class Config
-    MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
+    MONTHS = %i[jan feb mar apr may jun jul aug sep oct nov dec]
     AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num]
-    COMPOUND = [:month_txt, :formats]
+    COMPOUND = %i[month_txt formats]
     OPTIONS = [*AUTOUPDATE, *COMPOUND]
     CENTURY = 21
 
