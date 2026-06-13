@@ -1,0 +1,14 @@
+inherit_from: .rubocop_todo.yml
+
+plugins:
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  SuggestExtensions: false
+
+# Some examples assert all 12 month names at once (aggregated into one logical check).
+RSpec/ExampleLength:
+  Max: 12

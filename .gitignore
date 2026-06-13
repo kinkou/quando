@@ -1,7 +1,8 @@
+.bundle
 .DS_Store
 .editorconfig
 .vscode
-bundle
+vendor/bundle
 docker-compose.yml
 pkg
 up

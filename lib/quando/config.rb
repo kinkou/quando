@@ -1,21 +1,21 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
+# Holds the memoized class-level configuration ({Quando.config}).
 module Quando
+  # Stores all matchers and rebuilds the compound ones whenever a part changes.
   class Config
-
-    MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
-    AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num]
-    COMPOUND = [:month_txt, :formats]
-    OPTIONS = [*AUTOUPDATE, *COMPOUND]
+    MONTHS = %i[jan feb mar apr may jun jul aug sep oct nov dec].freeze
+    AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num].freeze
+    COMPOUND = %i[month_txt formats].freeze
+    OPTIONS = [*AUTOUPDATE, *COMPOUND].freeze
     CENTURY = 21
 
     private_constant :AUTOUPDATE, :COMPOUND, :OPTIONS, :CENTURY
 
-    attr_accessor *OPTIONS
+    attr_accessor(*OPTIONS)
 
     def initialize
-      @dlm = /[- .\/]+/
+      @dlm = %r{[- ./]+}
       @year = /(?<year>\d{4})/
       @year2 = /(?<year>\d{2})/
       @month_num = /(?<month> 1[012] | 0?[1-9])/x
@@ -34,14 +34,14 @@ module Quando
       @nov = /NOV(?:EMBER)?/i
       @dec = /DEC(?:EMBER)?/i
 
-      self.century=(CENTURY) # method call
+      self.century = (CENTURY) # method call
 
       uniupdate!
     end
 
     # Sets @month_txt, a compound of all month regexps that matches any month name
     def unimonth!
-      all_months_txt_rxs = MONTHS.map { |m| instance_variable_get("@#{m}".to_sym) }.join('|')
+      all_months_txt_rxs = MONTHS.map { |m| instance_variable_get(:"@#{m}") }.join('|')
       @month_txt = Regexp.new("(?<month>#{all_months_txt_rxs})", true)
     end
 
@@ -63,19 +63,17 @@ module Quando
         /^\s* #{@day} #{@dlm} #{@month_num} #{@dlm} #{@year2} \s*$/xi,
 
         # April, DECEMBER, sep., …
-        /^\s* #{@month_txt} \s*$/xi,
+        /^\s* #{@month_txt} \s*$/xi
       ]
     end
 
     # @return [Integer]
-    def century
-      @century
-    end
+    attr_reader :century
 
     # @param value [Integer]
     # @return [Integer]
     def century=(value)
-      @century = (value == 0 ? 1 : value) || CENTURY
+      @century = (value&.zero? ? 1 : value) || CENTURY
     end
 
     # A single method to update all compound matchers when a part matcher was changed
@@ -92,9 +90,10 @@ module Quando
       #   @jan = regexp
       #   uniupdate!
       # end
-      define_method("#{var}=".to_sym) do |regexp|
-        var_name = "@#{var}".to_sym
+      define_method(:"#{var}=") do |regexp|
+        var_name = :"@#{var}"
         return regexp if instance_variable_get(var_name) == regexp
+
         instance_variable_set(var_name, regexp)
         uniupdate!
       end
@@ -121,5 +120,4 @@ module Quando
   end
 
   configure
-
 end

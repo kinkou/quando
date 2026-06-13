@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Quando
+  # Tries each configured format and extracts day/month/year from the first match.
   class Parser
-
     def initialize
       @config = nil
     end
@@ -26,8 +26,10 @@ module Quando
         next unless @date_parts
 
         @current_format = regexp
-        year, month, day = detect_year, detect_month, detect_day
-        next unless (year && month && day)
+        year = detect_year
+        month = detect_month
+        day = detect_day
+        next unless year && month && day
 
         return Date.new(year, month, day)
       end
@@ -95,8 +97,7 @@ module Quando
     end
 
     def century_to_hundreds
-      (config.century > 0 ? config.century - 1 : config.century + 1) * 100
+      (config.century.positive? ? config.century - 1 : config.century + 1) * 100
     end
-
   end
 end
