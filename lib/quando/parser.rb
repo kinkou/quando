@@ -28,7 +28,7 @@ module Quando
         year = detect_year
         month = detect_month
         day = detect_day
-        next unless (year && month && day)
+        next unless year && month && day
 
         return Date.new(year, month, day)
       end
