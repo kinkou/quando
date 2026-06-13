@@ -15,7 +15,7 @@ RSpec.describe Quando do
 
       class << self
         def frozen_now
-          @_quando_time
+          @_quando_time # rubocop:disable RSpec/InstanceVariable
         end
 
         alias_method :original_now, :now
