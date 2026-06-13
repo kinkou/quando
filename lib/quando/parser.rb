@@ -2,7 +2,6 @@
 
 module Quando
   class Parser
-
     def initialize
       @config = nil
     end
@@ -97,6 +96,5 @@ module Quando
     def century_to_hundreds
       (config.century > 0 ? config.century - 1 : config.century + 1) * 100
     end
-
   end
 end

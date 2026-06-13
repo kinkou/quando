@@ -3,7 +3,6 @@
 
 module Quando
   class Config
-
     MONTHS = [:jan, :feb, :mar, :apr, :may, :jun, :jul, :aug, :sep, :oct, :nov, :dec]
     AUTOUPDATE = [:dlm, :year, :year2, :day, *MONTHS, :month_num]
     COMPOUND = [:month_txt, :formats]
