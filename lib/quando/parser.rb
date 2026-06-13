@@ -96,7 +96,7 @@ module Quando
     end
 
     def century_to_hundreds
-      (config.century > 0 ? config.century - 1 : config.century + 1) * 100
+      (config.century.positive? ? config.century - 1 : config.century + 1) * 100
     end
   end
 end

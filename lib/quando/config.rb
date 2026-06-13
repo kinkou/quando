@@ -71,7 +71,7 @@ module Quando
     # @param value [Integer]
     # @return [Integer]
     def century=(value)
-      @century = (value == 0 ? 1 : value) || CENTURY
+      @century = (value&.zero? ? 1 : value) || CENTURY
     end
 
     # A single method to update all compound matchers when a part matcher was changed
