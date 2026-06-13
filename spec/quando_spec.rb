@@ -58,7 +58,8 @@ RSpec.describe Quando do
       it 'Requires anchors to work properly' do
         expect('32'[described_class.config.day]).to eq('3')
 
-        unanchored = /#{described_class.config.day} \. #{described_class.config.month_num} \. #{described_class.config.year}/xi
+        c = described_class.config
+        unanchored = /#{c.day} \. #{c.month_num} \. #{c.year}/xi
         expect(described_class.parse('32.10.2020', matcher: unanchored)).to eq(Date.new(2020, 10, 2))
       end
     end
@@ -138,7 +139,8 @@ RSpec.describe Quando do
       it 'Requires anchors to work properly' do
         expect('12345'[described_class.config.year]).to eq('1234')
 
-        unanchored = /#{described_class.config.day} \. #{described_class.config.month_num} \. #{described_class.config.year}/xi
+        c = described_class.config
+        unanchored = /#{c.day} \. #{c.month_num} \. #{c.year}/xi
         expect(described_class.parse('13.12.12345', matcher: unanchored)).to eq(Date.new(1234, 12, 13))
       end
 
